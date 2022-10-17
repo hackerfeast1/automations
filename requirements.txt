@@ -4,3 +4,12 @@ numpy
 pandas
 pyttsx3
 qrcode
+BeautifulSoup4
+win10toast
+pypdf2
+requests
+pydub
+speech-recognition
+scrapy
+pywhatkit
+speedtest
