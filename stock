@@ -1,0 +1,55 @@
+STOCK = "TSLA"
+COMPANY_NAME = "Tesla Inc"
+import datetime
+import requests
+from twilio.rest import Client
+
+
+## STEP 1: Use https://www.alphavantage.co
+# When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
+paramet={
+    "function":"TIME_SERIES_DAILY",
+    "symbol":"TSLA",
+    "outputsize":"compact",
+    "datatype":"json",
+    "apikey":"JETONRHC66PTZQV5"
+
+
+}
+response=requests.get("https://www.alphavantage.co/query",params=paramet)
+data = response.json()["Time Series (Daily)"]
+data_list=[value for (key,value) in data.items()]
+yesterday_open=data_list[0]["1. open"]
+yesterday_close=data_list[0]["4. close"]
+day_before_open=data_list[1]["1. open"]
+day_before_close=data_list[1]["4. close"]
+
+diff1=abs(float(yesterday_close)-float(day_before_close))
+per=round(diff1/float(yesterday_close)*100)
+# twilo
+param1 = {
+    "qIntitle" : COMPANY_NAME,
+    "apikey":"ed6ef89f5e6c4f6d9bcb264d3bc9f743"
+
+}
+
+response_news=requests.get("https://newsapi.org/v2/everything",params=param1)
+response_news.raise_for_status()
+data_news=response_news.json()["articles"]
+threearcticles=data_news[:3]
+
+
+if per <=5 and per>=5:
+    formatted_article = [f"headlines{data_news['title']}.\n brief :{article['description']}" for i in threearcticles]
+    account_sid = "AC770ec6ae187ded931b48b4a897332e39"
+    auth_token = "124dd700ae58508b084c13fafeaf4462"
+    client = Client(account_sid, auth_token)
+    for i in formatted_article:
+        message = client.messages\create(
+        body=i,
+        from ='+19362433972',
+        to='+91 7502348732'
+        )
+
+    else:
+    print(f"the percentage is {per} ,  we will notify u once it reached 5%")
