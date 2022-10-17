@@ -1,0 +1,6 @@
+opencv-python
+opencv-python-contrib
+numpy
+pandas
+pyttsx3
+qrcode
