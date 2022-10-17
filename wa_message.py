@@ -1,3 +1,4 @@
+import pywhatkit
 pywhatkit.sendwhatmsg(phone_no="+911234567891", message="Your Message", time_hour=17, time_min=0, wait_time=20, tab_close=True, close_time=10)
 # wait_time - No of seconds to wait after running command
 # tab_close - Closes the tab once the message is sent
